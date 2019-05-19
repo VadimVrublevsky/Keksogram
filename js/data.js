@@ -13,7 +13,7 @@
   };
 
   // Создаем массив объектов
-  var getPictureDescription = function() {
+  (function() {
     var pictureDescription = [];
 
     for (var i = 0; i < picture.length; i++) {
@@ -21,8 +21,7 @@
       picturesDescription.push(pictureDescription);
     };
     return picturesDescription;
-  }
-  getPictureDescription(picturesDescription);
+  })();
 
   window.data = picturesDescription;
 
