@@ -2,7 +2,7 @@
 
 (function() {
 
-  var pictureListElement = document.querySelector('.pictures');
+  window.pictureListElement = document.querySelector('.pictures');
 
   // Рендерим по шаблону
   var pictureRender = function(data) {
@@ -23,5 +23,9 @@
     fragment.appendChild(pictureRender(window.data[i]));
   }
   pictureListElement.appendChild(fragment);
+
+  window.picture = {
+    pictureListElement: pictureListElement
+  };
 
 })();
