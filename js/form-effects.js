@@ -7,9 +7,9 @@
   var resizeInc = window.overlay.uploadForm.querySelector('.upload-resize-controls-button-inc');
   var resizeDec = window.overlay.uploadForm.querySelector('.upload-resize-controls-button-dec');
   var resizeValue = window.overlay.uploadForm.querySelector('.upload-resize-controls-value');
-  var effectControl = window.overlay.uploadForm.querySelector('.upload-effect-controls')
-  var effects = window.overlay.uploadForm.querySelector('.upload-effect-controls')
   var imagePreview = window.overlay.uploadForm.querySelector('.effect-image-preview');
+  var effectControl = window.overlay.uploadForm.querySelector('.upload-effect-controls');
+  var effects = window.overlay.uploadForm.querySelector('.upload-effect-controls');
 
   var scaleValue = {
     MIN: 25,
@@ -36,7 +36,6 @@
   /*_________________________*/
 
   // Применение эффекта к изображению
-
   // Функция очистки эффектов
   window.clearEffects = function() {
     imagePreview.classList.remove('effect-chrome');
