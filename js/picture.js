@@ -2,7 +2,7 @@
 
 (function() {
 
-  window.pictureListElement = document.querySelector('.pictures');
+  var pictureListElement = document.querySelector('.pictures');
 
   // Рендерим по шаблону
   var pictureRender = function(data) {

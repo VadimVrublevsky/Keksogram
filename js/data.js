@@ -2,7 +2,6 @@
 
 (function() {
 
-  var picture = window.picturesData.getImages();
   var picturesDescription = [];
 
   // Коструктор объекта для описания фотографии
@@ -14,6 +13,7 @@
 
   // Создаем массив объектов
   (function() {
+    var picture = window.picturesData.getImages();
     var pictureDescription = [];
 
     for (var i = 0; i < picture.length; i++) {
