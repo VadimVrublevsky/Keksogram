@@ -12,7 +12,7 @@
 
 
   // Функции открытия и закрытия Overlay
-  var closeUploadOverlay = function() {
+  window.closeUploadOverlay = function() {
     // Очистка формы при закрытии
     uploadForm.reset();
     window.formEffects.clearEffects();
@@ -69,10 +69,15 @@
     document.addEventListener('keydown', onUploadOverlayPressEsc);
   };
 
+  uploadForm.addEventListener('submit', function(evt) {
+    window.upload(new FormData(uploadForm));
+    evt.preventDefault();
+  });
+
   window.overlay = {
     uploadForm: uploadForm,
     uploadFormHashtags: uploadFormHashtags,
-    uploadFormDescription, uploadFormDescription
+    uploadFormDescription: uploadFormDescription,
+    closeUploadOverlay: closeUploadOverlay
   };
-
 })();
