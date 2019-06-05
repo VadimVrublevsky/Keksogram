@@ -11,21 +11,22 @@
     var pictureElement = pictureTemplate.cloneNode(true);
 
     pictureElement.querySelector('.picture img').src = data.url;
-    pictureElement.querySelector('.picture-comments').textContent = data.commentsQuantity;
+    pictureElement.querySelector('.picture-comments').textContent = data.comments.length;
     pictureElement.querySelector('.picture-likes').textContent = data.likes;
 
     return pictureElement;
-  }
+  };
 
   // Вставляем в HTML документ
-  var fragment = document.createDocumentFragment();
-  for (var i = 0; i < window.data.length; i++) {
-    fragment.appendChild(pictureRender(window.data[i]));
-  }
-  pictureListElement.appendChild(fragment);
-
-  window.picture = {
-    pictureListElement: pictureListElement
+  var onDataFromServer = function(data) {
+    var fragment = document.createDocumentFragment();
+    for (var i = 0; i < data.length; i++) {
+      fragment.appendChild(pictureRender(data[i]));
+    }
+    pictureListElement.appendChild(fragment);
+    window.actionsWithPopup();
   };
+
+  window.load(onDataFromServer);
 
 })();
