@@ -7,14 +7,20 @@
   var MAX_HASHTAG_LENGTH = 20;
   var MAX_HASHTAGS_QUANTITY = 5;
   var hashtagsInput = window.overlay.uploadForm.querySelector('.upload-form-hashtags');
-  var uploadFormSubmit = window.overlay.uploadForm.querySelector('.upload-form-submit');
 
+  var Error = {
+    TO_MANY_HASHTAGS: 'Нельзя указать больше пяти хэш-тегов!',
+    DUPLICATE_HASHTAG: 'Один и тот же хэш-тег не может быть использован дважды!',
+    NO_HASH: 'Хэш-тег должен начинаться с символа '+ '#' +'!',
+    NO_TAG: 'Хэш-тег не может состоять только из '+ '#' +'!',
+    TO_LONG_HASHTAG: 'Максимальная длина одного хэш-тега 20 символов!'
+  };
 
   // Ошибка при вводе Хэш-тегов
   var setErrorMessage = function(errorMessage) {
     var message = hashtagsInput.setCustomValidity(errorMessage);
     return message;
-  }
+  };
 
   // Подсветка поля красным цветом
   var setColorErrorField = function() {
@@ -23,29 +29,22 @@
 
   var setDefaultColorField = function() {
     return hashtagsInput.style.borderColor = 'inherit';
-  }
+  };
 
   // Функция получения количества Хэш-тегов
   var getQuantityHashtags = function(hashtagsArray) {
-    var quantityHashtags = 0;
-    for (var i = 0; i < hashtagsArray.length; i++) {
-      quantityHashtags++;
-    }
-    return quantityHashtags;
+    return hashtagsArray.length;
   };
 
   // Функция выявления повторяющихся Хэш-тегов
   var getRepeatHashtags = function(hashtagsArray) {
     var hashtagsArrayNoRepeat = [];
-    for (var u = 0; u < hashtagsArray.length; u++) {
-      if (hashtagsArrayNoRepeat.includes(hashtagsArray[u])) {
-        continue;
-      }
-      else {
-        hashtagsArrayNoRepeat.push(hashtagsArray[u]);
-      }
-    }
-    return hashtagsArrayNoRepeat;
+    hashtagsArray.forEach(function(hashtag) {
+      if (!hashtagsArrayNoRepeat.includes(hashtag)) {
+        hashtagsArrayNoRepeat.push(hashtag);
+      };
+    });
+    return hashtagsArrayNoRepeat.length;
   };
 
   hashtagsInput.addEventListener('input', function() {
@@ -60,29 +59,27 @@
     });
 
     if (getQuantityHashtags(hashtagsArray) > MAX_HASHTAGS_QUANTITY) {
-      errorMessage = 'Нельзя указать больше пяти хэш-тегов!';
-      setColorErrorField();
+      errorMessage = Error.TO_MANY_HASHTAGS;
     };
 
-    if (hashtagsArray.length > getRepeatHashtags(hashtagsArray).length) {
-      errorMessage = 'Один и тот же хэш-тег не может быть использован дважды!';
-      setColorErrorField();
+    if (getQuantityHashtags(hashtagsArray) > getRepeatHashtags(hashtagsArray)) {
+      errorMessage = Error.DUPLICATE_HASHTAG;
     };
 
-    for (var z = 0; z < hashtagsArray.length; z++) {
-      var hashtag = hashtagsArray[z];
+    hashtagsArray.forEach(function (hashtag) {
       if (hashtag[0] !== '#') {
-        errorMessage = 'Хэш-тег должен начинаться с символа '+ '#' +'!';
-        setColorErrorField();
+        errorMessage = Error.NO_HASH;
       }
       else if (hashtag.length === 1) {
-        errorMessage = 'Хэш-тег не может состоять только из '+ '#' +'!';
-        setColorErrorField();
+        errorMessage = Error.NO_TAG;
       }
       else if (hashtag.length > MAX_HASHTAG_LENGTH) {
-        errorMessage = 'Максимальная длина одного хэш-тега 20 символов!';
-        setColorErrorField();
-      }
+        errorMessage = Error.TO_LONG_HASHTAG;
+      };
+    });
+
+    if (errorMessage) {
+      setColorErrorField();
     };
 
     setErrorMessage(errorMessage);

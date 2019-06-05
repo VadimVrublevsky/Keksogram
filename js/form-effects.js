@@ -8,7 +8,6 @@
   var imagePreview = window.overlay.uploadForm.querySelector('.effect-image-preview');
   var effectControl = window.overlay.uploadForm.querySelector('.upload-effect-controls');
   var radioButtons = effectControl.querySelectorAll('input[type=radio]');
-  var effects = window.overlay.uploadForm.querySelector('.upload-effect-controls');
   var effectSaturation = window.overlay.uploadForm.querySelector('.upload-effect-level');
   var saturationPin = effectSaturation.querySelector('.upload-effect-level-pin');
   var saturationValue = effectSaturation.querySelector('.upload-effect-level-val');
