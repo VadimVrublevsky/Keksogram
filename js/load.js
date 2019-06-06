@@ -41,6 +41,7 @@
       switch (xhr.status) {
         case 200:
         data(xhr.response);
+        window.dataFromServer = xhr.response;
         break;
 
         case 400:
@@ -68,4 +69,10 @@
     xhr.send();
   };
 
+  // window.load = {
+  //   dataFromServer: dataFromServer
+  // };
+
 })();
+
+
