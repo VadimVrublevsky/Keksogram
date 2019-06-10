@@ -10,6 +10,9 @@
   var uploadOverlay = uploadForm.querySelector('.upload-overlay');
   var uploadOverlayClose = uploadForm.querySelector('.upload-form-cancel');
 
+  var FILES_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+  var preview = document.querySelector('.effect-image-preview');
+  var previewEffect = document.querySelectorAll('.upload-effect-preview');
 
   // Функции открытия и закрытия Overlay
   window.closeUploadOverlay = function() {
@@ -31,19 +34,37 @@
       closeUploadOverlay();
     };
   };
+  var onUploadOverlayPressLoadImage = function(evt) {
+    var file = uploadPhotoField.files[0];
+    var fileName = file.name.toLowerCase();
+    var matches = FILES_TYPES.some( function(it) {
+      return fileName.endsWith(it);
+    });
+    if(matches) {
+      var reader = new FileReader();
+      reader.addEventListener('load', function() {
+        preview.src = reader.result;
+        previewEffect.forEach(function(it) {
+          it.style.backgroundImage = 'url(' + preview.src + ')';
+        });
+        openUploadOverlay();
+      });
+      reader.readAsDataURL(file);
+    }
+    else {
+      alert('Неверный формат изображения, пожалуйста, используйте следующие форматы ' + FILES_TYPES);
+      closeUploadOverlay();
+    };
+  };
 
   // События
   uploadPhotoField.addEventListener('click', function() {
-    uploadPhotoField.addEventListener('change', function() {
-      openUploadOverlay();
-    });
+    uploadPhotoField.addEventListener('change', onUploadOverlayPressLoadImage);
   });
   uploadPhotoFieldLabel.addEventListener('keydown', function(evt) {
     if (window.util.isEnterEvt(evt)) {
       uploadPhotoField.click();
-      uploadPhotoField.addEventListener('change', function() {
-      openUploadOverlay();
-      });
+      uploadPhotoField.addEventListener('change', onUploadOverlayPressLoadImage);
     };
   });
   uploadOverlayClose.addEventListener('click', function() {

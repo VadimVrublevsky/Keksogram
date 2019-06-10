@@ -18,7 +18,15 @@
   };
 
   // Вставляем в HTML документ
-  var onDataFromServer = function(data) {
+  window.onDataFromServer = function(data, clear) {
+    if (clear) {
+      var list = document.querySelectorAll(".picture");
+        for (var i = list.length - 1; 0 <= i; i--) {
+          if (list[i] && list[i].parentElement) {
+            list[i].parentElement.removeChild(list[i]);
+          } 
+        }  
+    };
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < data.length; i++) {
       fragment.appendChild(pictureRender(data[i]));
@@ -29,4 +37,7 @@
 
   window.load(onDataFromServer);
 
+  window.picture = {
+    onDataFromServer: onDataFromServer
+  };
 })();
